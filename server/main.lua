@@ -1,6 +1,4 @@
-ESX = nil
-
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+ESX = exports["es_extended"]:getSharedObject()
 
 ESX.RegisterServerCallback('esx_vehiclelock:requestPlayerCars', function(source, cb, plate)
 	local xPlayer = ESX.GetPlayerFromId(source)

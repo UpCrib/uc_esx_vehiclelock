@@ -1,13 +1,6 @@
-ESX = nil
+ESX = exports["es_extended"]:getSharedObject()
 
 local isRunningWorkaround = false
-
-Citizen.CreateThread(function()
-	while ESX == nil do
-		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-		Citizen.Wait(0)
-	end
-end)
 
 function StartWorkaroundTask()
 	if isRunningWorkaround then
@@ -56,7 +49,6 @@ function ToggleVehicleLock()
 	end
 
 	ESX.TriggerServerCallback('esx_vehiclelock:requestPlayerCars', function(isOwnedVehicle)
-
 		if isOwnedVehicle then
 			local lockStatus = GetVehicleDoorLockStatus(vehicle)
 
@@ -75,6 +67,10 @@ function ToggleVehicleLock()
 
 	end, ESX.Math.Trim(GetVehicleNumberPlateText(vehicle)))
 end
+
+AddEventHandler("uc_esx_vehiclelock:toggleLock", function ()
+	ToggleVehicleLock()
+end)
 
 Citizen.CreateThread(function()
 	while true do
